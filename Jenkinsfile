@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('git-checkout') {
             steps {
-                git branch: 'main', credentialsId: 'git', url: 'https://github.com/vsawantvinay/springboot-jenkins-docker-k8s-project.git'
+                git branch: 'main', credentialsId: 'git-cred', url: 'https://github.com/vsawantvinay/springboot-jenkins-docker-k8s-project.git'
             }
         }
         
