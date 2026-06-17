@@ -7,19 +7,19 @@ pipeline {
                 git branch: 'main', credentialsId: 'git-cred', url: 'https://github.com/vsawantvinay/springboot-jenkins-docker-k8s-project.git'
             }
         }
-        
+
         stage('mvn build') {
             steps {
                 sh 'mvn clean package'
             }
         }
-        
+
         stage('docker images') {
             steps {
                 sh 'docker build -t myimage .'
             }
         }
-        
+
          stage('docker push') {
             steps {
                 script {
@@ -30,7 +30,12 @@ pipeline {
                 }
             }
         }
-                
-                
+            
+            stage('deploy to k8s') {
+            steps {
+                sh 'kubectl apply -f k8s/deployment.yml'
+            }
+        }
+
     }
 }
