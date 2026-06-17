@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: myfirstcontainer
-        image: vsawantvinay/
+        image: vsawantvinay/practiceproject:v1
         ports:
         - port: 80
           containerPort: 9090
