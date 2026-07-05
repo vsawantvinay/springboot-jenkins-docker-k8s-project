@@ -5,8 +5,7 @@ pipeline {
         IMAGE = 'my-devsecops-img'
         container_name = 'myproject'
         TRIVY_CACHE_DIR = '.trivycache' 
-        Image_Tag = 'git rev-parse --short=7 HEAD'
-    }
+            }
 
     stages {
         stage('Git-Checkout') {
@@ -14,6 +13,17 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/vsawantvinay/springboot-jenkins-docker-k8s-project.git'
             }
         }
+
+        stage('Set Image Tag') {
+            steps {
+                script {
+                    env.Image_Tag = env.GIT_COMMIT.take(7)
+
+                    echo "Image_Tag = ${env.Image_Tag}"
+                }
+            }
+        }
+        
         
             stage('Resolve Maven Dependencies') { 
                 steps { 
