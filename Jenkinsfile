@@ -108,6 +108,17 @@ pipeline {
                 sh 'docker run -itd -p 9090:9090 --name ${container_name} vsawantvinay/${IMAGE}:${Image_Tag}'
             }
         }
+
+        stage('Update Manifest') {
+            steps {
+
+                sh """
+                sed -i 's|image: .*|image: $IMAGE_NAME:$IMAGE_TAG|g' k8s/deployment.yml
+                """
+
+                sh 'cat deployment.yaml'
+            }
+        }
         
         stage('Deploy to K8S') {
             steps {
