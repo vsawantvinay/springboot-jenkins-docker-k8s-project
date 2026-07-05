@@ -112,9 +112,9 @@ pipeline {
         stage('Update Manifest') {
             steps {
                 sh """
-                sed -i 's|image: .*|image: ${IMAGE}:${Image_Tag}|g' k8s/deployment.yml
+                sed -i 's|image: .*|image: vsawantvinay/${IMAGE}:${Image_Tag}|g' k8s/deployment.yml
                 """
-                sh 'cat deployment.yaml'
+                sh 'cat k8s/deployment.yaml'
             }
         }
         
