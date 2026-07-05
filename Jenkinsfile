@@ -119,21 +119,21 @@ pipeline {
         }
 
         stage('Push Updated Manifest') {
-
             steps {
+			withCredentials([usernamePassword(
+            credentialsId: 'git-cred',
+            usernameVariable: 'GIT_USERNAME',
+            passwordVariable: 'GIT_PASSWORD'
+        )]) {
 
-            withCredentials([gitUsernamePassword(credentialsId: 'git-cred')]) {
-            sh """
+	sh """        
+    git config user.email "vinayak.sawant83@gmail.com"
+    git config user.name "vinay"
+    git add k8s/deployment.yml
+    git commit -m "Updated image tag to ${IMAGE_TAG}"
+    git push https://${GIT_USER}:${GIT_PASS}@github.com/vsawantvinay/springboot-jenkins-docker-k8s-project.git HEAD:main           
+    """
             
-            git config user.email "vinayak.sawant83@gmail.com"
-            git config user.name "vinay"
-
-            git add k8s/deployment.yml
-
-            git commit -m "Updated image tag to ${IMAGE_TAG}"
-
-            git push https://${GIT_USER}:${GIT_PASS}@github.com/USERNAME/REPO.git HEAD:main
-            """
 		}
 	}
 }
