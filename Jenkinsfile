@@ -85,8 +85,8 @@ pipeline {
                 script {
                 withDockerRegistry(credentialsId: 'docker-cred') {
                 sh '''
-                docker tag ${IMAGE} vsawantvinay/${IMAGE}:Image_Tag
-                docker push vsawantvinay/${IMAGE}:Image_Tag
+                docker tag ${IMAGE} vsawantvinay/${IMAGE}:${Image_Tag}
+                docker push vsawantvinay/${IMAGE}:${Image_Tag}
                 '''
                     }
                 }
@@ -105,7 +105,7 @@ pipeline {
         
         stage('create container') {
             steps {
-                sh 'docker run -itd -p 9090:9090 --name ${container_name} vsawantvinay/${IMAGE}:Image_Tag'
+                sh 'docker run -itd -p 9090:9090 --name ${container_name} vsawantvinay/${IMAGE}:${Image_Tag}'
             }
         }
         
