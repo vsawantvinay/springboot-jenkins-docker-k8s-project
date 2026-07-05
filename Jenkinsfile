@@ -137,30 +137,5 @@ pipeline {
 		}
 	}
 }
-        
-        stage('Deploy to K8S') {
-            steps {
-                sh 'kubectl apply -f k8s/deployment.yml'
-            }
-        }
-        
-        stage('Wait for App') {
-            steps {
-                sh '''
-                sleep 60
-                kubectl get pods
-                kubectl get svc
-                '''
-                }
-            }
-            
-            stage('OWASP DAST SCAN') {
-                steps {
-                    sh '''
-                    cd reports
-                    docker run --rm ghcr.io/zaproxy/zaproxy:stable zap-baseline.py -t http://65.0.128.58:30412/Welcome
-                    '''
-            }
-        }
     }
 }
