@@ -5,6 +5,7 @@ pipeline {
         IMAGE = 'my-devsecops-img'
         container_name = 'myproject'
         TRIVY_CACHE_DIR = '.trivycache' 
+        Image_Tag = 'git rev-parse --short=7 HEAD'
     }
 
     stages {
@@ -74,8 +75,8 @@ pipeline {
                 script {
                 withDockerRegistry(credentialsId: 'docker-cred') {
                 sh '''
-                docker tag ${IMAGE} vsawantvinay/${IMAGE}:v1
-                docker push vsawantvinay/${IMAGE}:v1
+                docker tag ${IMAGE} vsawantvinay/${IMAGE}:Image_Tag
+                docker push vsawantvinay/${IMAGE}:Image_Tag
                 '''
                     }
                 }
@@ -94,7 +95,7 @@ pipeline {
         
         stage('create container') {
             steps {
-                sh 'docker run -itd -p 9090:9090 --name ${container_name} vsawantvinay/${IMAGE}:v1'
+                sh 'docker run -itd -p 9090:9090 --name ${container_name} vsawantvinay/${IMAGE}:Image_Tag'
             }
         }
         
