@@ -131,7 +131,7 @@ pipeline {
     git config user.name "vinay"
     git add k8s/deployment.yml
     git commit -m "Updated image tag to ${IMAGE_TAG}"
-    git push https://${GIT_USER}:${GIT_PASS}@github.com/vsawantvinay/springboot-jenkins-docker-k8s-project.git HEAD:main           
+    git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/vsawantvinay/springboot-jenkins-docker-k8s-project.git HEAD:main           
     """
             
 		}
