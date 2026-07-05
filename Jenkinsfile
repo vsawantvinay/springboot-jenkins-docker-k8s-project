@@ -117,6 +117,26 @@ pipeline {
                 sh 'cat k8s/deployment.yaml'
             }
         }
+
+        stage('Push Updated Manifest') {
+
+            steps {
+
+            withCredentials([gitUsernamePassword(credentialsId: 'git-cred')]) {
+            sh """
+            
+            git config user.email "vinayak.sawant83@gmail.com"
+            git config user.name "vinay"
+
+            git add k8s/deployment.yml
+
+            git commit -m "Updated image tag to ${IMAGE_TAG}"
+
+            git push https://${GIT_USER}:${GIT_PASS}@github.com/USERNAME/REPO.git HEAD:main
+            """
+		}
+	}
+}
         
         stage('Deploy to K8S') {
             steps {
