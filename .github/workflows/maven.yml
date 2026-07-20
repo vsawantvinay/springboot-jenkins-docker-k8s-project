@@ -1,0 +1,11 @@
+name: GITHUB action CICD
+on:
+  workflow_dispatch:
+jobs:
+  buid:
+    runs-on: ubuntu-latest
+    steps:
+      - name: git checkout
+        uses: actions/checkout@v7
+      - name: buid project with maven
+        run: mvn clean install
