@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: myfirstcontainer
-        image: vsawantvinay/my-devsecops-img:3e42de6
+        image: vsawantvinay/my-devsecops-img:fc65663
         ports:
         - containerPort: 9090
 ---
