@@ -7,5 +7,11 @@ jobs:
     steps:
       - name: git checkout
         uses: actions/checkout@v7
+      - name: setup java 21
+      - uses: actions/setup-java@v6
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'maven'
       - name: buid project with maven
         run: mvn clean install
