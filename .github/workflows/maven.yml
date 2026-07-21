@@ -87,5 +87,17 @@ jobs:
         run: |
             docker tag githubactionimg ${{ secrets.DOCKER_USERNAME }}/githubactionimg:v1
             docker push ${{ secrets.DOCKER_USERNAME }}/githubactionimg:v1
-        
+
+      - name: Install trivy
+        run: |
+            sudo apt-get install wget apt-transport-https gnupg lsb-release -y
+            wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dearmor | sudo tee /usr/share/keyrings/trivy.gpg > /dev/null
+            echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
+            sudo apt-get update
+            sudo apt-get install trivy -y
+            
+      - name: Trivy image scan
+        run: |
+            trivy image --severity HIGH,CRITICAL --exit-code 0 --format sarif -o reports/trivy-image.sarif ${{ secrets.DOCKER_USERNAME }}/githubactionimg:v1
+           
             
