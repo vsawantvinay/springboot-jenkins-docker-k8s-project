@@ -53,3 +53,10 @@ jobs:
         run: |
             mkdir -p reports
             trivy fs . --severity HIGH,CRITICAL --exit-code 0 --format sarif -o reports/trivy-fs.sarif
+
+  Docker-Build-Tag-Push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build Docker Image
+        run: docker build -t githubactionimg .
+            
