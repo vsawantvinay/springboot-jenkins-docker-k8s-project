@@ -98,6 +98,7 @@ jobs:
             
       - name: Trivy image scan
         run: |
+            mkdir -p reports
             trivy image --severity HIGH,CRITICAL --exit-code 0 --format sarif -o reports/trivy-image.sarif ${{ secrets.DOCKER_USERNAME }}/githubactionimg:v1
            
             
