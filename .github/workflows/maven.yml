@@ -50,4 +50,6 @@ jobs:
             sudo apt-get update
             sudo apt-get install trivy -y
       - name: Trivy FS scan
-        run: trivy fs . --severity HIGH,CRITICAL --exit-code 0 --format sarif -o reports/trivy-fs.sarif
+        run: |
+            mkdir -p reports
+            trivy fs . --severity HIGH,CRITICAL --exit-code 0 --format sarif -o reports/trivy-fs.sarif
