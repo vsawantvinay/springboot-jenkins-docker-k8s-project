@@ -15,6 +15,11 @@ jobs:
           cache: 'maven'
       - name: buid project with maven
         run: mvn clean install
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: myporject.jar
+          path: target/*.jar
       
   scan:
     runs-on: ubuntu-latest
@@ -61,7 +66,14 @@ jobs:
     steps:
       - name: Git Checkout
         uses: actions/checkout@v4
-        
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: myporject.jar
+          path: target
+
+      - run: ls -l target
+      
       - name: Build Docker Image
         run: docker build -t githubactionimg .
             
