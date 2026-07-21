@@ -2,7 +2,7 @@ name: GITHUB action CICD
 on:
   workflow_dispatch:
 jobs:
-  buid:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: git checkout
@@ -19,9 +19,24 @@ jobs:
   scan:
     runs-on: ubuntu-latest
     needs: build
+
     steps:
-      - name: sonar scan
+      - name: Git Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Sonar Scan
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-          run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=GitHubAction -Dsonar.projectName='GitHubAction'
+        run: |
+          mvn -B verify \
+            org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+            -Dsonar.projectKey=GitHubAction \
+            -Dsonar.projectName=GitHubAction
